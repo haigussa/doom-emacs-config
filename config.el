@@ -6,8 +6,8 @@
 
 ;; Some functionality uses this to identify you, e.g. GPG configuration, email
 ;; clients, file templates and snippets.
-(setq user-full-name "John Doe"
-      user-mail-address "john@doe.com")
+(setq user-full-name "Gussa Haile"
+      user-mail-address "haigussa@gmail.com")
 
 ;; Doom exposes five (optional) variables for controlling fonts in Doom. Here
 ;; are the three important ones:
@@ -28,10 +28,13 @@
 ;
 ;; (setq doom-theme 'doom-gruvbox)
  (setq doom-theme 'doom-one)
+ ;; (setq doom-theme 'doom-tomorrow-night)
 
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
 ;; (setq org-directory "~/org/")
+
+(setq display-line-numbers-type 'relative)
 
 (setq
     org-directory "~/org/"
@@ -40,11 +43,28 @@
     org-ellipsis " ▼ "
 )
 
-;; (setq org-ellipsis " ▼ ")
+(after! org
+  (add-to-list 'org-export-backends 'latex))
+
+(add-hook 'org-mode-hook 'turn-on-flyspell)
+;; visual appearance for org buffer
+(use-package olivetti)
+(setq org-startup-folded nil)
+(add-hook 'org-mode-hook 'visual-line-mode)
+(add-hook 'org-mode-hook 'olivetti-mode)
+(setq olivetti-body-width 100)
+
+(use-package ox-twbs)
+(setq org-publish-project-alist
+      '(("org-notes"
+         :base-directory "~/org/"
+         :publishing-directory "~/org/public_html/"
+         :publishing-function org-twbs-publish-to-html
+         :with-sub-superscript nil
+         )))
+;;
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
-(setq display-line-numbers-type 'relative)
-
 
 ;; Here are some additional functions/macros that could help you configure Doom:
 ;;
@@ -62,4 +82,12 @@
 ;;
 ;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
 ;; they are implemented.
+
+;; Web Dev Related
+(use-package css-mode
+  :ensure nil
+  :custom
+  (css-indent-offset 2))
+(use-package all-the-icons)
+
 
